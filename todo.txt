@@ -1,0 +1,17 @@
+Students
+Register
+Login
+Logout
+Search Course
+Register For Course
+Progress Marking
+Submit Assignment
+
+
+Instructors/Lecturers
+Login
+Create Course, Course Code bla bla
+Modularized Course Content
+Post Assignment
+Grade Assignment
+Graded Assignments (sort by score)

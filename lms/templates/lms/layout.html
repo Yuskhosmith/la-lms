@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>{% block title %}LMS{% endblock %}</title>
+        {% load static %}
+        {% load static tailwind_tags %}
+        {% tailwind_css %}
+        {% block head %}
+        {% endblock %}
+    </head>
+    <body>
+        <nav>
+            <h1><a href="{% url 'index' %}">LMS</a></h1>
+            <ul>
+                {% if not user.is_authenticated %}
+                <li><a href="{% url 'register' %}">Register</a></li>
+                <li><a href="{% url 'login' %}">Login</a></li>
+                {% else %}
+                {% if user.is_lecturer %}
+                <li><a href="{% url 'addcourse' %}">Add New Course</a></li>
+                <li><a href="{% url 'courses' %}">Courses</a></li>
+                {% endif %} 
+                <li><a href="{% url 'logout' %}">Logout</a></li>
+                {% endif %}
+            </ul>
+        </nav>
+          
+        {% block body %}
+        {% endblock %}
+    </body>
+</html>

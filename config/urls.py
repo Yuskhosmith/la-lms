@@ -18,6 +18,6 @@ from django.urls import path, include
 
 urlpatterns = [
     path("admin/", admin.site.urls),
-    path("lms", include("lms.urls")),
-    path("", include("students.urls")),
+    path("__reload__/", include("django_browser_reload.urls")),
+    path("", include("lms.urls")),
 ]
