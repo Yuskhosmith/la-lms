@@ -1,0 +1,12 @@
+{% extends "lms/layout.html" %}
+
+{% load static %}
+{% block body %}
+    <div class="w-full p-4">
+        <h1 class="text-2xl font-bold">Courses</h1>
+        {% if user.is_authenticated and user.is_lecturer %}
+        <a href="{% url 'addcourse' %}" class="">Create New Course</a>
+            
+        {% endif %}
+    </div>
+{% endblock %}

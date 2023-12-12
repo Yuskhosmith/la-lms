@@ -9,7 +9,6 @@ Submit Assignment
 
 
 Instructors/Lecturers
-Login
 Create Course, Course Code bla bla
 Modularized Course Content
 Post Assignment

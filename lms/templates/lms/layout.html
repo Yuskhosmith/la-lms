@@ -10,24 +10,42 @@
         {% block head %}
         {% endblock %}
     </head>
-    <body>
-        <nav>
-            <h1><a href="{% url 'index' %}">LMS</a></h1>
+    <body class="grid grid-cols-12 h-screen overflow-auto">
+        {% if user.is_authenticated %}
+        <nav class="col-span-2 shadow-lg bg-blue-600 text-white">
+            <div class="flex flex-col items-center">
+                <div class="w-20 h-28"><img class="object-cover" src="{% static 'lms/img/lasu.png' %}" alt=""></div>
+                <h1><a href="{% url 'index' %}">LMS</a></h1>
+            </div>
+            
             <ul>
-                {% if not user.is_authenticated %}
-                <li><a href="{% url 'register' %}">Register</a></li>
-                <li><a href="{% url 'login' %}">Login</a></li>
-                {% else %}
+                {% with request.resolver_match.url_name as url_name %}
                 {% if user.is_lecturer %}
-                <li><a href="{% url 'addcourse' %}">Add New Course</a></li>
-                <li><a href="{% url 'courses' %}">Courses</a></li>
+                <li class="nav-item">
+                    <a class="{% if url_name == 'index' %}active{% endif %}" href="{% url 'index' %}">Dashboard</a>
+                </li>
+                <li class="nav-item"><a class="{% if url_name == 'courses' %}active{% endif %}" href="{% url 'courses' %}">Courses</a></li>
+                <li class="nav-item"><a href="">Assignments</a></li>
                 {% endif %} 
-                <li><a href="{% url 'logout' %}">Logout</a></li>
-                {% endif %}
+                <li class="nav-item"><a href="{% url 'logout' %}">Logout</a></li>
+                {% endwith %}
+                
             </ul>
         </nav>
-          
-        {% block body %}
-        {% endblock %}
+        {% else %}
+        <nav class="col-span-2 shadow-lg bg-blue-600 text-white">
+            <h1><a href="{% url 'index' %}">LMS</a></h1>
+            <ul>
+                <li><a href="{% url 'register' %}">Register</a></li>
+                <li><a href="{% url 'login' %}">Login</a></li>
+            </ul>
+        </nav>
+        {% endif %}
+
+        <main class="col-span-8">
+            {% block body %}
+            {% endblock %}
+        </main>
+        
     </body>
 </html>

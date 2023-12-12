@@ -23,6 +23,46 @@ def index(request):
         return render(request, 'lms/index.html')
     return render(request, 'lms/index.html')
 
+@login_required
+def courses(request):
+    user = request.user
+    try:
+        if user.is_student:
+            return render(request, 'lms/courses.html')
+        if user.is_lecturer:
+            courses = Course.objects.all().order_by('course_code')
+            ctx = {
+                'courses': courses
+            }
+            return render(request, 'lms/courses.html', ctx)
+    except AttributeError:
+        return render(request, 'lms/index.html')
+    return render(request, 'lms/index.html')
+
+@login_required
+def addcourse(request):
+    user = request.user
+    if user.is_lecturer:
+        if request.POST:
+            form_data = CourseForm(request.POST)
+            if form_data.is_valid():
+                x = form_data.save()
+                return redirect(course, id=x.id) 
+        ctx = {'form': CourseForm}
+        return render(request, 'lms/addcourse.html', ctx)
+    return redirect(index)
+
+@login_required
+def course(request, id):
+    user = request.user
+    if user.is_lecturer:
+        ctx = {
+            'course': Course.objects.get(id=id)
+        }
+        return render(request, 'lms/course.html', ctx)
+    return redirect(courses)
+
+
 def login_view(request):   
 
     if request.method == "POST":

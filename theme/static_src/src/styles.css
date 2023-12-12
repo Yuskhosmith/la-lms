@@ -3,5 +3,17 @@
 @tailwind utilities;
 
 .input {
-    @apply w-[300px] p-2 rounded-md border-2 border-g
-  }
+  @apply w-[300px] p-2 rounded-md border-2 border-g;
+}
+
+.nav-item {
+  @apply w-auto m-4
+}
+
+.nav-item a {
+  @apply block w-full p-4 rounded-full active:bg-white active:text-black
+}
+
+.nav-item a.active {
+  @apply bg-white text-black
+}
