@@ -1,6 +1,8 @@
 from django.db import models
 from datetime import datetime
 from django.contrib.auth.models import AbstractUser
+from tinymce.models import HTMLField
+
 # Create your models here.
 
 class User(AbstractUser):
@@ -17,10 +19,17 @@ class Course(models.Model):
     course_title = models.CharField(max_length=1000, null=True)
     unit = models.IntegerField(null=True)
     type = models.CharField(max_length=10, choices=COURSE_TYPE_CHOICE, null=True)
+    instructor = models.ForeignKey(User, on_delete=models.CASCADE, null=True)
 
-# class Lesson(models.Model):
-#     course = models.ForeignKey(Course, on_delete=models.CASCADE, null=True)
-#     title = models.CharField(max_length=1000, null=True)
-#     content = models.TextField(null=True)
-#     rich text for content, allow video content
-#     date = models.DateTimeField(default=datetime.now, null=True)
+class Lesson(models.Model):
+    course = models.ForeignKey(Course, on_delete=models.CASCADE, null=True)
+    title = models.CharField(max_length=1000, null=True)
+    content = HTMLField()
+    date = models.DateTimeField(default=datetime.now, null=True)
+
+class Assignment(models.Model):
+    course = models.ForeignKey(Course, on_delete=models.CASCADE, null=True)
+    title = models.CharField(max_length=1000, null=True)
+    content = models.TextField(null=True)
+    date = models.DateTimeField(default=datetime.now, null=True)
+    due_date = models.DateTimeField(default=datetime.now, null=True)

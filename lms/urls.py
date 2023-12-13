@@ -6,6 +6,7 @@ urlpatterns = [
     path('', views.index, name='index'),
     path('courses', views.courses, name='courses'),
     path('addcourse', views.addcourse, name='addcourse'),
+    path('course/<int:id>', views.course, name='course'),
 
 
 

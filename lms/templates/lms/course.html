@@ -1,0 +1,12 @@
+{% extends "lms/layout.html" %}
+
+{% block body %}
+<div class="w-full p-4">
+    <h1 class="text-2xl font-bold">{{course.course_title}}</h1>
+    <span class="text-sm font-semibold">{{course.course_code}} || {{course.unit}} units || {{course.type}}</span>
+    {% if user.is_authenticated and user.is_lecturer %}
+        
+    {% endif %}
+    
+</div>
+{% endblock %}

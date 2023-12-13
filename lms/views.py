@@ -40,6 +40,16 @@ def courses(request):
     return render(request, 'lms/index.html')
 
 @login_required
+def course(request, id):
+    user = request.user
+    if user.is_lecturer:
+        ctx = {
+            'course': Course.objects.get(id=id)
+        }
+        return render(request, 'lms/course.html', ctx)
+    return redirect(courses)
+
+@login_required
 def addcourse(request):
     user = request.user
     if user.is_lecturer:
@@ -52,15 +62,7 @@ def addcourse(request):
         return render(request, 'lms/addcourse.html', ctx)
     return redirect(index)
 
-@login_required
-def course(request, id):
-    user = request.user
-    if user.is_lecturer:
-        ctx = {
-            'course': Course.objects.get(id=id)
-        }
-        return render(request, 'lms/course.html', ctx)
-    return redirect(courses)
+
 
 
 def login_view(request):   

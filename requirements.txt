@@ -10,6 +10,7 @@ cookiecutter==2.5.0
 Django==5.0
 django-browser-reload==1.12.1
 django-tailwind==3.6.0
+django-tinymce==3.6.1
 idna==3.6
 Jinja2==3.1.2
 markdown-it-py==3.0.0

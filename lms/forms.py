@@ -17,13 +17,15 @@ class CourseForm(forms.ModelForm):
         widgets = {
             'course_code': forms.TextInput(attrs={
                    "placeholder": "Course Code",
+                   "class": "input",
                 }
             ),
             "course_title": forms.TextInput(attrs={
                 "placeholder":"Course Title",
+                "class": "input",
             }),
             'unit': forms.NumberInput(
-                attrs={"placeholder": "Course Unit", 'required': True}
+                attrs={"placeholder": "Course Unit", 'required': True, "class": "input",}
             ),
-            'type': forms.Select()
+            'type': forms.Select(attrs={"class": "input", "required": True,})
         }
