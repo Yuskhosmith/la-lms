@@ -5,8 +5,18 @@
     <div class="w-full p-4">
         <h1 class="text-2xl font-bold">Courses</h1>
         {% if user.is_authenticated and user.is_lecturer %}
-        <a href="{% url 'addcourse' %}" class="">Create New Course</a>
-            
+        <a href="{% url 'addcourse' %}" class="block mt-4 p-4 bg-blue-500 text-white font-semibold w-fit rounded-lg">Create New Course</a>
         {% endif %}
+        <div class="mt-8 grid grid-cols-3">
+            {% for course in courses %}
+            <div class="border-2 border-gray-400 rounded p-4 col-span-1">
+                <a href="{% url 'course' course.id %}" class="">
+                <h1 class="text-lg font-bold">{{course.course_code}}: {{course.course_title}}</h1>
+                <h3 class="font-semibold">{{course.unit}} units || {{course.type}}</h3>
+                </a>
+            </div>
+                
+            {% endfor %}
+        </div>
     </div>
 {% endblock %}

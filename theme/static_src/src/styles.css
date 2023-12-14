@@ -6,6 +6,10 @@
   @apply w-[300px] p-2 rounded-md border-2 border-g;
 }
 
+.biginput{
+  @apply rounded-md p-2 outline-none border-0 text-xl w-[752px] focus:outline-none focus:border-0
+}
+
 .nav-item {
   @apply w-auto m-4
 }
@@ -16,4 +20,23 @@
 
 .nav-item a.active {
   @apply bg-white text-black
+}
+
+.renderer h1 {
+  @apply text-[2em] font-bold my-[0.67em]
+}
+.renderer h2 {
+  @apply text-[1.5em] font-bold my-[0.83em]
+}
+.renderer h3 {
+  @apply text-[1.17em] font-semibold my-[1em]
+}
+.renderer h4 {
+  @apply text-[1em] font-medium my-[1.33em]
+}
+.renderer h5 {
+  @apply text-[0.83em] font-medium my-[1.67em]
+}
+.renderer h6 {
+  @apply text-[0.67em] font-medium my-[2.33em]
 }

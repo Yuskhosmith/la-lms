@@ -30,6 +30,6 @@ class Lesson(models.Model):
 class Assignment(models.Model):
     course = models.ForeignKey(Course, on_delete=models.CASCADE, null=True)
     title = models.CharField(max_length=1000, null=True)
-    content = models.TextField(null=True)
+    content = HTMLField()
     date = models.DateTimeField(default=datetime.now, null=True)
     due_date = models.DateTimeField(default=datetime.now, null=True)

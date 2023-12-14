@@ -1,7 +1,31 @@
 from django import forms
-from .models import Course
+from tinymce.widgets import TinyMCE
+from .models import Course, Lesson, Assignment
+
+class AssignmentForm(forms.ModelForm):
+    class Meta:
+        model = Assignment
+        fields = ['title', 'content']
+        widgets = {
+            'title': forms.TextInput(attrs={
+                   "placeholder": "Lesson Title",
+                   "class": "biginput",
+                }
+            ),
+        }
 
 
+class LessonForm(forms.ModelForm):
+    class Meta:
+        model = Lesson
+        fields = ['title', 'content']
+        widgets = {
+            'title': forms.TextInput(attrs={
+                   "placeholder": "Lesson Title",
+                   "class": "biginput",
+                }
+            ),
+        }
 
 
 class CourseForm(forms.ModelForm):

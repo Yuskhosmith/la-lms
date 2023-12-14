@@ -5,8 +5,21 @@
     <h1 class="text-2xl font-bold">{{course.course_title}}</h1>
     <span class="text-sm font-semibold">{{course.course_code}} || {{course.unit}} units || {{course.type}}</span>
     {% if user.is_authenticated and user.is_lecturer %}
-        
+    <div class="flex gap-4 mt-4">
+        <a href="{% url 'addlesson' course.id %}" class="p-4 bg-blue-500 text-white font-semibold w-fit rounded-lg">Add Lesson</a>
+        <a href="{% url 'addassignment' course.id %}" class="p-4 bg-blue-500 text-white font-semibold w-fit rounded-lg">Add Assignment</a>
+    </div>
     {% endif %}
+    <div class="flex flex-col gap-2 mt-4">
+        {% for lesson in lessons %}
+        <a href="{% url 'lesson' lesson.id %}">
+            <div class="flex justify-between p-4 rounded border border-gray-400">
+                <h1>{{lesson.title}}</h1>
+                <span>{{lesson.date}}</span>
+            </div>
+        </a>
+        {% endfor %}
+    </div>
     
 </div>
 {% endblock %}
