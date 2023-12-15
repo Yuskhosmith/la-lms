@@ -4,6 +4,9 @@
 <div class="w-full p-4">
     <h1 class="text-2xl font-bold">{{assignment.course.course_title}}</h1>
     <span class="text-sm font-semibold">{{assignment.course.course_code}} || {{assignment.course.unit}} units || {{assignment.course.type}}</span>
+    {% if user.is_student %}
+        <a href="{% url 'submit' assignment.id %}" class="p-4 block bg-blue-500 mt-4 text-white font-semibold w-fit rounded-lg">Submit Solution</a>
+    {% endif %}
     <div class="mt-4">
         <h1 class="text-xl font-semibold">{{assignment.title}}</h1>
         <span class="text-sm">Uploaded on {{assignment.date}}</span>
@@ -11,10 +14,12 @@
             {{assignment.content|safe}}
         </div>
     </div>
+    {% if user.is_lecturer %}
     <div class="flex flex-col gap-2 mt-4">
         <h1 class="text-xl font-semibold">Submissions</h1>
         <!-- For submiisions in assignment -->
     </div>
+    {% endif %}
     
 </div>
 {% endblock %}

@@ -12,6 +12,7 @@ urlpatterns = [
     path('lesson/<int:id>', views.lesson, name='lesson'),
     path('addlesson/<int:id>', views.addlesson, name='addlesson'),
     path('addassignment/<int:id>', views.addassignment, name='addassignment'),
+    path('submit/<int:id>', views.submit, name='submit'),
 
 
 

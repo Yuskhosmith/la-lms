@@ -1,6 +1,6 @@
 from django import forms
 from tinymce.widgets import TinyMCE
-from .models import Course, Lesson, Assignment
+from .models import Course, Lesson, Assignment, Submission
 
 class AssignmentForm(forms.ModelForm):
     class Meta:
@@ -13,6 +13,11 @@ class AssignmentForm(forms.ModelForm):
                 }
             ),
         }
+
+class SubmissionForm(forms.ModelForm):
+    class Meta:
+        model = Submission
+        exclude = ['grade', 'assignment', 'user']
 
 
 class LessonForm(forms.ModelForm):

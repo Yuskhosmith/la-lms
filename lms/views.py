@@ -27,9 +27,7 @@ def index(request):
 def courses(request):
     user = request.user
     try:
-        if user.is_student:
-            return render(request, 'lms/courses.html')
-        if user.is_lecturer:
+        if user:
             courses = Course.objects.all().order_by('course_code')
             ctx = {
                 'courses': courses
@@ -43,9 +41,7 @@ def courses(request):
 def assignments(request):
     user = request.user
     try:
-        if user.is_student:
-            return render(request, 'lms/assignments.html')
-        if user.is_lecturer:
+        if user:
             assignments = Assignment.objects.all().order_by('-date')
             ctx = {
                 'assignments': assignments
@@ -54,13 +50,12 @@ def assignments(request):
     except AttributeError:
         return render(request, 'lms/index.html')
     return render(request, 'lms/index.html')
+
 @login_required
 def assignment(request, id):
     user = request.user
     try:
-        if user.is_student:
-            return render(request, 'lms/assignment.html')
-        if user.is_lecturer:
+        if user:
             assignment = Assignment.objects.get(id=id)
             ctx = {
                 'assignment': assignment
@@ -73,7 +68,7 @@ def assignment(request, id):
 @login_required
 def course(request, id):
     user = request.user
-    if user.is_lecturer:
+    if user:
         course = Course.objects.get(id=id)
         ctx = {
             'course': course,
@@ -127,12 +122,27 @@ def addassignment(request, id):
     return redirect(index)
 
 @login_required
+def submit(request, id):
+    user = request.user
+    assignment = Assignment.objects.get(id=id)
+    if user.is_student:
+        if request.POST:
+            form_data = SubmissionForm(request.POST)
+            if form_data.is_valid():
+                instance = form_data.save(commit=False)
+                instance.assignment = assignment
+                instance.user = user
+                instance.save()
+                return redirect(course, id=id) 
+        ctx = {'form': SubmissionForm, 'assignment': assignment}
+        return render(request, 'lms/submit.html', ctx)
+    return redirect(index)
+
+@login_required
 def lesson(request, id):
     ctx = {'lesson': Lesson.objects.get(id=id)}
     return render(request, 'lms/lesson.html', ctx)
     
-
-
 
 
 def login_view(request):   
