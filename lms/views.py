@@ -6,6 +6,7 @@ from django.urls import reverse
 from django.http import HttpResponse, HttpResponseRedirect, JsonResponse
 from .models import *
 from .forms import *
+from datetime import datetime, timezone
 
 # Create your views here.
 def index(request):
@@ -55,10 +56,27 @@ def assignments(request):
 def assignment(request, id):
     user = request.user
     try:
-        if user:
+        if user.is_student:
+            assignment = Assignment.objects.get(id=id)
+            submitted = assignment.submissions.filter(user=user).exists()
+            current_time = datetime.now(timezone.utc)
+            
+            ctx = {
+                'assignment': assignment,
+                'submitted': submitted,
+                'due': assignment.due_date and current_time > assignment.due_date
+            }
+            if submitted:
+                e = assignment.submissions.get(user=user)
+                if e.grade:
+                    ctx['grade'] = e.grade
+
+            return render(request, 'lms/assignment.html', ctx)
+        elif user.is_lecturer:
             assignment = Assignment.objects.get(id=id)
             ctx = {
-                'assignment': assignment
+                'assignment': assignment,
+                'submissions': assignment.submissions.all()
             }
             return render(request, 'lms/assignment.html', ctx)
     except AttributeError:
@@ -133,7 +151,7 @@ def submit(request, id):
                 instance.assignment = assignment
                 instance.user = user
                 instance.save()
-                return redirect(course, id=id) 
+                return redirect(index) 
         ctx = {'form': SubmissionForm, 'assignment': assignment}
         return render(request, 'lms/submit.html', ctx)
     return redirect(index)

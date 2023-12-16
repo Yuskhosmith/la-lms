@@ -35,7 +35,7 @@ class Assignment(models.Model):
     due_date = models.DateTimeField(default=datetime.now, null=True)
 
 class Submission(models.Model):
-    user = models.ForeignKey(User, on_delete=models.CASCADE, null=True)
+    user = models.ForeignKey(User, on_delete=models.CASCADE, null=True, related_name='solutions')
     assignment = models.ForeignKey(Assignment, on_delete=models.CASCADE, null=True, related_name='submissions')
     grade = models.CharField(max_length=24, null=True)
     solution = HTMLField()
