@@ -29,14 +29,20 @@
     <div class="flex flex-col gap-2 mt-4 overflow-y-auto">
         <h1 class="text-xl font-semibold">Submissions</h1>
         <!-- For submiisions in assignment -->
-        {% for submission in submissions %}
-        <div class="">
-            <h2>{{submission.user}}</h2>
-            <div class="renderer">{{submission.solution|safe}}</div>
-            Grade ________
+        <div class="grid grid-cols-5 gap-4">
+            {% for submission in submissions %}
+                <div class="w-full border border-gray-500 rounded p-4">
+                    <h2 class="font-bold text-lg">{{submission.user}}</h2>
+                    {% if submission.grade %}
+                        <h2>Grade: {{submission.grade}}</h2>
+                    {% else %}
+                        <a href="{% url 'grade' submission.id %}" class="block underline text-blue-600">Grade</a>
+                    {% endif %}
+                </div>
+                
+            {% endfor %}
         </div>
         
-        {% endfor %}
     </div>
     {% endif %}
     

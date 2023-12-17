@@ -12,12 +12,22 @@ from datetime import datetime, timezone
 def index(request):
     user = request.user
     try:
+        courses = Course.objects.all().order_by('course_code')
+        assignments = Assignment.objects.all().order_by('-date')
         if user.is_student:
-            return render(request, 'lms/student.html')
-        if user.is_lecturer:
-            courses = Course.objects.all().order_by('course_code')
+            submissions = Submission.objects.filter(user=user)
             ctx = {
-                'courses': courses
+                'courses': courses,
+                'assignments': assignments,
+                'submissions': submissions
+            }
+            return render(request, 'lms/student.html', ctx)
+        if user.is_lecturer:
+            submissions = Submission.objects.all().order_by('-id')
+            ctx = {
+                'courses': courses,
+                'assignments': assignments,
+                'submissions': submissions
             }
             return render(request, 'lms/lecturer.html', ctx)
     except AttributeError:
@@ -161,6 +171,19 @@ def lesson(request, id):
     ctx = {'lesson': Lesson.objects.get(id=id)}
     return render(request, 'lms/lesson.html', ctx)
     
+@login_required
+def grade(request, id):
+    user = request.user
+    if user.is_lecturer:
+        submission = Submission.objects.get(id=id)
+        if request.POST:
+            grade = request.POST.get('grade')
+            submission.grade = grade
+            submission.save()
+        ctx = {'submission': submission}
+        return render(request, 'lms/grade.html', ctx)
+    return redirect(index)
+
 
 
 def login_view(request):   

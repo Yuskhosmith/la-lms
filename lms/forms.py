@@ -5,13 +5,21 @@ from .models import Course, Lesson, Assignment, Submission
 class AssignmentForm(forms.ModelForm):
     class Meta:
         model = Assignment
-        fields = ['title', 'content']
+        fields = ['title', 'content', 'due_date']
+        labels = {
+            "title": "",
+            "content": "",
+            "due_date": "Due Date"
+        }
         widgets = {
             'title': forms.TextInput(attrs={
                    "placeholder": "Lesson Title",
                    "class": "biginput",
                 }
             ),
+            "due_date": forms.DateInput(attrs={
+                "class": "input",
+            }),
         }
 
 class SubmissionForm(forms.ModelForm):

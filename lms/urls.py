@@ -13,6 +13,7 @@ urlpatterns = [
     path('addlesson/<int:id>', views.addlesson, name='addlesson'),
     path('addassignment/<int:id>', views.addassignment, name='addassignment'),
     path('submit/<int:id>', views.submit, name='submit'),
+    path('grade/<int:id>', views.grade, name='grade'),
 
 
 

@@ -3,6 +3,42 @@
 {% load static %}
 {% block body %}
     <div class="w-full p-4">
-        <h1 class="text-2xl font-bold">Dashboard</h1>
+        <h1 class="text-2xl font-bold mb-4">Dashboard</h1>
+        <h1 class="text-lg font-semibold border-b">Courses</h1>
+        <div class="my-4 grid grid-cols-3">
+            {% for course in courses %}
+            <div class="border-2 border-gray-400 rounded p-4 col-span-1">
+                <a href="{% url 'course' course.id %}" class="">
+                <h1 class="text-lg font-bold">{{course.course_code}}: {{course.course_title}}</h1>
+                <h3 class="font-semibold">{{course.unit}} units || {{course.type}}</h3>
+                </a>
+            </div>
+            {% endfor %}
+        </div>
+        <h1 class="text-lg font-semibold border-b">Assignments</h1>
+        <div class="my-4 grid grid-cols-3">
+            {% for assignment in assignments %}
+            <div class="border-2 border-gray-400 rounded p-4 col-span-1">
+                <a href="{% url 'assignment' assignment.id %}" class="">
+                <h1 class="text-lg font-bold">{{assignment.course.course_code}}: {{assignment.course.course_title}}</h1>
+                <h3 class="font-semibold">{{assignment.course.unit}} units || {{assignment.course.type}}</h3>
+                </a>
+            </div>
+            {% endfor %}
+        </div>
+        <h1 class="text-lg font-semibold border-b">Submissions</h1>
+        <div class="my-4 grid grid-cols-3">
+            {% for submission in submissions %}
+            <div class="border-2 border-gray-400 rounded p-4 col-span-1">
+                <a href="{% url 'assignment' submission.assignment.id %}" class="">
+                <h1 class="text-lg font-bold">{{submission.assignment.course.course_code}}: {{submission.assignment.course.course_title}}</h1>
+                <h3 class="font-semibold">{{submission.assignment.course.unit}} units || {{submission.assignment.course.type}}</h3>
+                {% if submission.grade %}
+                    <p>Grade: {{submission.grade}}</p>
+                {% endif %}
+                </a>
+            </div>
+            {% endfor %}
+        </div>
     </div>
 {% endblock %}
