@@ -11,6 +11,9 @@ cd la-lms
 # install project requirements
 pip install -r requirements.txt
 
+# Migrate database
+python manage.py migrate
+
 # Run the program
 python manage.py runserver
 
